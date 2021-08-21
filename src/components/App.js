@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -19,6 +20,7 @@ function App() {
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
+  const [loggedIn, setLoggedIn] = useState(true);
   const [cards, setCards] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
 
@@ -112,18 +114,28 @@ function App() {
   return (
     <div className="page">
       <currentUserContext.Provider value={currentUser}>
+        <Header />
         <Switch>
           <Route path='/sign-up'>
-            
+            <div className="">sign-up</div>
           </Route>
           <Route path='/sign-in'>
-
+            <div className="">sign-in</div>
           </Route>
+          <ProtectedRoute path='/'
+            loggedIn={loggedIn}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={confirmCardDelete}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            isLoaded={isLoaded}
+            component={Main} />
         </Switch>
 
-        <Header />
-
-        <Main
+        {/* <Main
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={confirmCardDelete}
@@ -131,7 +143,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          isLoaded={isLoaded} />
+          isLoaded={isLoaded} /> */}
 
         <Footer />
 
@@ -166,4 +178,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);
