@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+import { Switch, Route } from 'react-router-dom';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
-import { useEffect, useState } from "react";
 import api from "../utils/api";
 import { currentUserContext } from "../contexts/CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -59,7 +60,7 @@ function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    
+
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
@@ -107,10 +108,18 @@ function App() {
       })
       .catch(err => console.log(err));
   }
-  
+
   return (
     <div className="page">
       <currentUserContext.Provider value={currentUser}>
+        <Switch>
+          <Route path='/sign-up'>
+            
+          </Route>
+          <Route path='/sign-in'>
+
+          </Route>
+        </Switch>
 
         <Header />
 
@@ -126,7 +135,7 @@ function App() {
 
         <Footer />
 
-        <EditProfilePopup 
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser} />
