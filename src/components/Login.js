@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Login({ title, buttonText }) {
+export default function Login({ title, buttonText, onLogin }) {
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -8,14 +8,14 @@ export default function Login({ title, buttonText }) {
 
   const handeleSubmit = (e) => {
     e.preventDefault();
-
+    onLogin(values)
   }
 
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
     const value = target.value;
-    setValues({ 
+    setValues({
       ...values,
       [name]: value,
     })

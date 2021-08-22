@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, withRouter, Link } from 'react-router-dom';
+import { Switch, Route, withRouter, Link, useHistory } from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
@@ -26,12 +26,18 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [cards, setCards] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
+      })
+      .then(() => {
+        const token = localStorage.getItem('jwt');
+        if(token) setLoggedIn(true);
+        auth.checkToken()
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoaded(false));
@@ -114,12 +120,22 @@ function App() {
       .catch(err => console.log(err));
   }
 
-  const handleSignUp = ({email, password}) => {
-    auth.signUp({email, password})
+  const handleSignUp = ({ email, password }) => {
+    auth.signUp({ email, password })
       .then(json => {
-        setCurrentUser({...currentUser, email: json.data.email});
+        setCurrentUser({ ...currentUser, email: json.data.email });
       })
       .catch(error => console.log(error));
+  }
+
+  const handleSignIn = ({ email, password }) => {
+    auth.signIn({ email, password })
+    .then(json => {
+      localStorage.setItem('jwt', json.token);
+      setLoggedIn(true)
+      history.push('/')
+    })
+    .catch(error => console.log(error));
   }
 
   return (
@@ -141,6 +157,7 @@ function App() {
             </Header>
             <Login title="Вход"
               buttonText="Войти"
+              onLogin={handleSignIn}
             />
           </Route>
           <ProtectedRoute path='/'

@@ -3,11 +3,10 @@ class Auth {
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
-  _request({ endpoint, body }) {
+  _request({ endpoint, body, headers }) {
     return fetch(this.baseUrl + endpoint, {
-      method: 'POST',
-      headers: this.headers,
-      body: body
+      headers: { ...this.headers, ...headers },
+      body
     })
       .then(res => {
         if (res.ok) {
@@ -20,19 +19,28 @@ class Auth {
 
   signUp(userData) {
     return this._request({
+      method: 'POST',
       endpoint: '/signup',
       body: JSON.stringify(userData)
     })
   }
 
-  signIn({ email, password }) {
+  signIn(userData) {
     return this._request({
+      method: 'POST',
       endpoint: '/signin',
-      body: {
-        email: email,
-        password: password,
-      }
+      body: JSON.stringify(userData)
     })
+  }
+
+  checkToken(token) {
+    return this._request({
+      method: "GET",
+      endpoint: '/users/me',
+      headers: {"Authorization" : `Bearer ${token}`},
+      body: ''
+    })
+
   }
 }
 
