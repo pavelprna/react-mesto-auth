@@ -138,18 +138,6 @@ function App() {
             component={Main} />
         </Switch>
 
-        {/* <Main
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={confirmCardDelete}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          isLoaded={isLoaded} /> */}
-
-        <Footer />
-
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
