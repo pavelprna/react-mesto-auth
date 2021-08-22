@@ -12,6 +12,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmationPopup from "./ConfirmationPopup";
 import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -118,7 +119,8 @@ function App() {
         <Header />
         <Switch>
           <Route path='/sign-up'>
-
+            <Register title="Регистрация"
+            buttonText="Зарегистрироваться" />
           </Route>
           <Route path='/sign-in'>
             <Login title="Вход"
