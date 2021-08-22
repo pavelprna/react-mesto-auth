@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Link } from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
@@ -116,15 +116,20 @@ function App() {
   return (
     <div className="page">
       <currentUserContext.Provider value={currentUser}>
-        <Header />
         <Switch>
           <Route path='/sign-up'>
+            <Header>
+              <Link to='/sign-in' className='header__link'>Войти</Link>
+            </Header>
             <Register title="Регистрация"
-            buttonText="Зарегистрироваться" />
+              buttonText="Зарегистрироваться" />
           </Route>
           <Route path='/sign-in'>
+            <Header>
+              <Link to='/sign-up' className='header__link'>Регистрация</Link>
+            </Header>
             <Login title="Вход"
-            buttonText="Войти"
+              buttonText="Войти"
             />
           </Route>
           <ProtectedRoute path='/'
