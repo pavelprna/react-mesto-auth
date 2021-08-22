@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-export default function Register({ title, buttonText }) {
+export default function Register({ title, buttonText, onRegister }) {
   const [values, setValues] = useState({
     email: '',
     password: '',
   });
 
-  const handeleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+    onRegister(values);
   }
   const handleChange = (e) => {
     const target = e.target;
@@ -21,7 +21,7 @@ export default function Register({ title, buttonText }) {
   }
   return (
     <main className="content">
-      <form className="form auth__form" onSubmit={handeleSubmit}>
+      <form className="form auth__form" onSubmit={handleSubmit}>
         <h2 className="form__title auth__title">{title}</h2>
         <label htmlFor="email-input" className="form__label">
           <input type="email" name="email" value={values.email} id="email-input" placeholder="Email" className="form__input auth__input"

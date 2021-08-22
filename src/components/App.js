@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import api from "../utils/api";
+import auth from "../utils/auth";
 import { currentUserContext } from "../contexts/CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -113,6 +114,14 @@ function App() {
       .catch(err => console.log(err));
   }
 
+  const handleSignUp = ({email, password}) => {
+    auth.signUp({email, password})
+      .then(json => {
+        setCurrentUser({...currentUser, email: json.data.email});
+      })
+      .catch(error => console.log(error));
+  }
+
   return (
     <div className="page">
       <currentUserContext.Provider value={currentUser}>
@@ -122,7 +131,9 @@ function App() {
               <Link to='/sign-in' className='header__link'>Войти</Link>
             </Header>
             <Register title="Регистрация"
-              buttonText="Зарегистрироваться" />
+              buttonText="Зарегистрироваться"
+              onRegister={handleSignUp}
+            />
           </Route>
           <Route path='/sign-in'>
             <Header>

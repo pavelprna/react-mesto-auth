@@ -13,17 +13,15 @@ class Auth {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка ${res.status}: ${res.message}`);
+        console.log(res)
+        return Promise.reject(`Ошибка ${res.status}: ${res.error}`);
       })
   }
 
-  signUp({ email, password }) {
+  signUp(userData) {
     return this._request({
       endpoint: '/signup',
-      body: {
-        email: email,
-        password: password,
-      }
+      body: JSON.stringify(userData)
     })
   }
 
@@ -44,3 +42,5 @@ const auth = new Auth({
     'Content-Type': 'application/json',
   }
 })
+
+export default auth;
