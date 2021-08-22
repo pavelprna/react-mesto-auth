@@ -11,6 +11,7 @@ import { currentUserContext } from "../contexts/CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmationPopup from "./ConfirmationPopup";
+import Login from "./Login";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -20,7 +21,7 @@ function App() {
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [cards, setCards] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
 
@@ -117,10 +118,12 @@ function App() {
         <Header />
         <Switch>
           <Route path='/sign-up'>
-            <div className="">sign-up</div>
+
           </Route>
           <Route path='/sign-in'>
-            <div className="">sign-in</div>
+            <Login title="Вход"
+            buttonText="Войти"
+            />
           </Route>
           <ProtectedRoute path='/'
             loggedIn={loggedIn}
