@@ -13,15 +13,16 @@ class Auth {
       })
   }
 
-  signUp(userData) {
+  signUp({ password, email }) {
     return this._request({
       endpoint: '/signup',
       req: {
         method: 'POST',
-        header: this.headers,
-        body: JSON.stringify(userData)
+        headers: this.headers,
+        body: JSON.stringify({ password, email })
       }
     })
+      .catch(err => console.log(err));
   }
 
   signIn(userData) {
@@ -33,7 +34,7 @@ class Auth {
         body: JSON.stringify(userData)
       }
     })
-    .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }
 
   checkToken(token) {
@@ -43,7 +44,7 @@ class Auth {
         method: "GET",
         headers: {
           ...this.headers,
-          'Authorization' : `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         },
       }
     })

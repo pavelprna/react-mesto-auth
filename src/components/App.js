@@ -122,7 +122,9 @@ function App() {
   const handleSignUp = (userData) => {
     auth.signUp(userData)
       .then(json => {
-        setCurrentUser({ ...currentUser, email: json.data.email });
+        if (json?.data) {
+          setCurrentUser({ ...currentUser, email: json.data.email });
+        }
       })
       .catch(error => console.log(error));
   }
