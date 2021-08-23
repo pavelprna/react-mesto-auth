@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import { currentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 import PageLoader from "./PageLoader";
+import Header from "./Header";
 
 function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onEditAvatar, onAddPlace, isLoaded }) {
   const currentUser = React.useContext(currentUserContext);
@@ -11,6 +12,7 @@ function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onE
     ? <PageLoader />
     : (
       <>
+        <Header />
         <main className="content">
 
           <section className="profile">

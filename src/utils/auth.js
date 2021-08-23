@@ -3,42 +3,49 @@ class Auth {
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
-  _request({ endpoint, body, headers }) {
-    return fetch(this.baseUrl + endpoint, {
-      headers: { ...this.headers, ...headers },
-      body
-    })
+  _request({ endpoint, req }) {
+    return fetch(this.baseUrl + endpoint, req)
       .then(res => {
         if (res.ok) {
           return res.json();
         }
-        console.log(res)
-        return Promise.reject(`Ошибка ${res.status}: ${res.error}`);
+        return Promise.reject(`Ошибка ${res.status}: ${res.statusText}`);
       })
   }
 
   signUp(userData) {
     return this._request({
-      method: 'POST',
       endpoint: '/signup',
-      body: JSON.stringify(userData)
+      req: {
+        method: 'POST',
+        header: this.headers,
+        body: JSON.stringify(userData)
+      }
     })
   }
 
   signIn(userData) {
     return this._request({
-      method: 'POST',
       endpoint: '/signin',
-      body: JSON.stringify(userData)
+      req: {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify(userData)
+      }
     })
+    .catch(err => console.log(err))
   }
 
   checkToken(token) {
     return this._request({
-      method: "GET",
       endpoint: '/users/me',
-      headers: {"Authorization" : `Bearer ${token}`},
-      body: ''
+      req: {
+        method: "GET",
+        headers: {
+          ...this.headers,
+          'Authorization' : `Bearer ${token}`
+        },
+      }
     })
 
   }

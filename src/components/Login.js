@@ -6,7 +6,7 @@ export default function Login({ title, buttonText, onLogin }) {
     password: '',
   });
 
-  const handeleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     onLogin(values)
   }
@@ -23,7 +23,7 @@ export default function Login({ title, buttonText, onLogin }) {
 
   return (
     <main className="content">
-      <form className="form auth__form" onSubmit={handeleSubmit}>
+      <form className="form auth__form" onSubmit={handleSubmit}>
         <h2 className="form__title auth__title">{title}</h2>
         <label htmlFor="email-input" className="form__label">
           <input type="email" name="email" value={values.email} id="email-input" placeholder="Email" className="form__input auth__input"

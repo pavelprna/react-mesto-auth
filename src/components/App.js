@@ -3,7 +3,6 @@ import { Switch, Route, withRouter, Link, useHistory } from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
-import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import api from "../utils/api";
@@ -29,15 +28,15 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      setLoggedIn(true);
+      history.push('/');
+    }
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
-      })
-      .then(() => {
-        const token = localStorage.getItem('jwt');
-        if(token) setLoggedIn(true);
-        auth.checkToken()
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoaded(false));
@@ -120,22 +119,24 @@ function App() {
       .catch(err => console.log(err));
   }
 
-  const handleSignUp = ({ email, password }) => {
-    auth.signUp({ email, password })
+  const handleSignUp = (userData) => {
+    auth.signUp(userData)
       .then(json => {
         setCurrentUser({ ...currentUser, email: json.data.email });
       })
       .catch(error => console.log(error));
   }
 
-  const handleSignIn = ({ email, password }) => {
-    auth.signIn({ email, password })
-    .then(json => {
-      localStorage.setItem('jwt', json.token);
-      setLoggedIn(true)
-      history.push('/')
-    })
-    .catch(error => console.log(error));
+  const handleSignIn = (userData) => {
+    auth.signIn(userData)
+      .then(json => {
+        if (json?.token) {
+          localStorage.setItem('jwt', json.token);
+          setLoggedIn(true);
+          history.push('/');
+        }
+      })
+      .catch(error => console.log(error));
   }
 
   return (
