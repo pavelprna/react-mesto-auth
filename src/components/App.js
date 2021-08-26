@@ -72,7 +72,7 @@ function App() {
 
     document.addEventListener('mousedown', closeByClick);
 
-    return document.removeEventListener('mousedown', closeByClick);
+    return () => document.removeEventListener('mousedown', closeByClick);
   }, []);
 
   const handleEditAvatarClick = () => {
