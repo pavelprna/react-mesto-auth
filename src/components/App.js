@@ -58,9 +58,21 @@ function App() {
       }
     }
 
-    document.addEventListener('keydown', closeByEscape)
+    document.addEventListener('keydown', closeByEscape);
 
-    return () => document.removeEventListener('keydown', closeByEscape)
+    return () => document.removeEventListener('keydown', closeByEscape);
+  }, []);
+
+  useEffect(() => {
+    const closeByClick = (e) => {
+      if (e.target.classList.contains('popup_opened')) {
+        closeAllPopups();
+      }
+    }
+
+    document.addEventListener('mousedown', closeByClick);
+
+    return document.removeEventListener('mousedown', closeByClick);
   }, []);
 
   const handleEditAvatarClick = () => {
