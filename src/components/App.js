@@ -145,9 +145,13 @@ function App() {
   }
 
   const handleLogin = (email) => {
-    setCurrentUser({...currentUser, 'email': email});
+    setCurrentUser({...currentUser, email: email});
     setLoggedIn(true);
     history.push('/');
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
   }
 
   return (
@@ -181,6 +185,7 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            onLogout={handleLogout}
             isLoaded={isLoaded}
             component={Main} />
         </Switch>

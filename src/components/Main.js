@@ -4,15 +4,19 @@ import { currentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 import PageLoader from "./PageLoader";
 import Header from "./Header";
+import { Link } from "react-router-dom";
 
-function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onEditAvatar, onAddPlace, isLoaded }) {
+function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onEditAvatar, onAddPlace, onLogout, isLoaded }) {
   const currentUser = React.useContext(currentUserContext);
 
   return !isLoaded
     ? <PageLoader />
     : (
       <>
-        <Header />
+        <Header>
+          <div>{currentUser.email}yuiyuy</div>
+          <Link to="/sign-in" onClick={onLogout} className='header__link'>Выйти</Link>
+        </Header>
         <main className="content">
 
           <section className="profile">
