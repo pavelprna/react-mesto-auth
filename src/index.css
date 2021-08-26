@@ -8,10 +8,11 @@
 @import url(./blocks/loader/loader.css);
 @import url(./blocks/loader/__animation/loader__animation.css);
 
+@import url(./blocks/link/link.css);
+
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/header/__email/header__email.css);
-@import url(./blocks/header/__link/header__link.css);
 
 @import url(./blocks/content/content.css);
 
@@ -68,3 +69,4 @@
 @import url(./blocks/auth/__title/auth__title.css);
 @import url(./blocks/auth/__button/auth__button.css);
 @import url(./blocks/auth/__input/auth__input.css);
+@import url(./blocks/auth/__subtitlle/auth__subtitle.css);

@@ -209,7 +209,7 @@ function App() {
         <Switch>
           <Route path='/sign-up'>
             <Header>
-              <Link to='/sign-in' className='header__link'>Войти</Link>
+              <Link to='/sign-in' className='header__link link'>Войти</Link>
             </Header>
             <Register title="Регистрация"
               buttonText="Зарегистрироваться"
@@ -218,7 +218,7 @@ function App() {
           </Route>
           <Route path='/sign-in'>
             <Header>
-              <Link to='/sign-up' className='header__link'>Регистрация</Link>
+              <Link to='/sign-up' className='header__link link'>Регистрация</Link>
             </Header>
             <Login title="Вход"
               buttonText="Войти"

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register({ title, buttonText, onRegister }) {
   const [values, setValues] = useState({
@@ -34,6 +35,7 @@ export default function Register({ title, buttonText, onRegister }) {
           <span className="form__input-error form__input-error_visible about-input-error"></span>
         </label>
         <button type="submit" className="form__submit-button auth__button button">{buttonText}</button>
+        <p className="auth__subtitle">Уже зарегистрированы? <Link to="/sign-in" className="auth__link link">Войти</Link></p>
       </form>
     </main>
   )
