@@ -24,7 +24,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  const [tooltipData, setTooltipData] = useState({icon: '', message: ''});
+  const [tooltipData, setTooltipData] = useState({ icon: '', message: '' });
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [userEmail, setUserEmail] = useState('');
@@ -49,7 +49,19 @@ function App() {
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoaded(true));
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+
+    document.addEventListener('keydown', closeByEscape)
+
+    return () => document.removeEventListener('keydown', closeByEscape)
+  }, []);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
