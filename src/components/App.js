@@ -182,9 +182,12 @@ function App() {
       .then(json => {
         if (json?.token) {
           localStorage.setItem('jwt', json.token);
-          setLoggedIn(true);
           history.push('/');
         }
+      })
+      .then(() => {
+        setUserEmail(userData.email);
+        setLoggedIn(true);
       })
       .catch(error => console.log(error));
   }
