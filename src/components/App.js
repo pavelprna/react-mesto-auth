@@ -22,6 +22,7 @@ function App() {
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
+  const [userEmail, setUserEmail] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [cards, setCards] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -126,7 +127,7 @@ function App() {
     auth.signUp(userData)
       .then(json => {
         if (json?.data) {
-          setCurrentUser({ ...currentUser, email: json.data.email });
+          setUserEmail(json.data.email);
         }
       })
       .catch(error => console.log(error));
@@ -145,7 +146,7 @@ function App() {
   }
 
   const handleLogin = (email) => {
-    setCurrentUser({...currentUser, email: email});
+    setUserEmail(email);
     setLoggedIn(true);
     history.push('/');
   }
@@ -187,6 +188,7 @@ function App() {
             onCardClick={handleCardClick}
             onLogout={handleLogout}
             isLoaded={isLoaded}
+            userEmail={userEmail}
             component={Main} />
         </Switch>
 

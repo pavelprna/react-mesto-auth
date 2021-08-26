@@ -6,7 +6,7 @@ import PageLoader from "./PageLoader";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 
-function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onEditAvatar, onAddPlace, onLogout, isLoaded }) {
+function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onEditAvatar, onAddPlace, onLogout, userEmail, isLoaded }) {
   const currentUser = React.useContext(currentUserContext);
 
   return !isLoaded
@@ -14,7 +14,7 @@ function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onE
     : (
       <>
         <Header>
-          <div>{currentUser.email}yuiyuy</div>
+          <div className="header__email">{userEmail}</div>
           <Link to="/sign-in" onClick={onLogout} className='header__link'>Выйти</Link>
         </Header>
         <main className="content">
