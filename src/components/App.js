@@ -24,14 +24,17 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [cards, setCards] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      setLoggedIn(true);
-      history.push('/');
+      auth.checkToken(token)
+        .then(res => {
+          handleLogin(res.data.email);
+        })
+        .catch(err => console.log(err));
     }
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([user, cards]) => {
@@ -39,7 +42,7 @@ function App() {
         setCards(cards);
       })
       .catch(err => console.log(err))
-      .finally(() => setIsLoaded(false));
+      .finally(() => setIsLoaded(true));
   }, [])
 
   const handleEditAvatarClick = () => {
@@ -139,6 +142,12 @@ function App() {
         }
       })
       .catch(error => console.log(error));
+  }
+
+  const handleLogin = (email) => {
+    setCurrentUser({...currentUser, 'email': email});
+    setLoggedIn(true);
+    history.push('/');
   }
 
   return (
