@@ -13,6 +13,9 @@ import AddPlacePopup from "./AddPlacePopup";
 import ConfirmationPopup from "./ConfirmationPopup";
 import Login from "./Login";
 import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
+import tooltipIconOk from "../images/logo/tooltip-ok.svg";
+import tooltipIconError from "../images/logo/tooltip-error.svg";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -20,6 +23,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [tooltipData, setTooltipData] = useState({icon: '', message: ''});
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [userEmail, setUserEmail] = useState('');
@@ -64,6 +69,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
     setIsConfirmationPopupOpen(false);
+    setIsTooltipOpen(false);
     setSelectedCard(null);
   }
 
@@ -128,9 +134,22 @@ function App() {
       .then(json => {
         if (json?.data) {
           setUserEmail(json.data.email);
+          setTooltipData({
+            icon: tooltipIconOk,
+            message: 'Вы успешно зарегистрировались!'
+          });
+          setIsTooltipOpen(true);
+          history.push('/');
         }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        setTooltipData({
+          icon: tooltipIconError,
+          message: 'Что-то пошло не так! Попробуйте ещё раз.'
+        });
+        setIsTooltipOpen(true);
+        console.log(error);
+      });
   }
 
   const handleSignIn = (userData) => {
@@ -153,6 +172,7 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('jwt');
+    setUserEmail('');
   }
 
   return (
@@ -217,6 +237,12 @@ function App() {
           isOpen={isImagePopupOpen}
           card={selectedCard}
           onClose={closeAllPopups} />
+
+        <InfoTooltip
+          isOpen={isTooltipOpen}
+          data={tooltipData}
+          onClose={closeAllPopups}
+        />
 
       </currentUserContext.Provider>
     </div>

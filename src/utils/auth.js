@@ -21,8 +21,7 @@ class Auth {
         headers: this.headers,
         body: JSON.stringify({ password, email })
       }
-    })
-      .catch(err => console.log(err));
+    });
   }
 
   signIn(userData) {
