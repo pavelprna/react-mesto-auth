@@ -50,6 +50,7 @@ function App() {
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoaded(true));
+      // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
