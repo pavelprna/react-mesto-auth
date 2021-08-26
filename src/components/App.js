@@ -3,11 +3,12 @@ import { Switch, Route, withRouter, Link, useHistory } from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
+import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import api from "../utils/api";
 import auth from "../utils/auth";
-import { currentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmationPopup from "./ConfirmationPopup";
@@ -201,7 +202,7 @@ function App() {
 
   return (
     <div className="page">
-      <currentUserContext.Provider value={currentUser}>
+      <CurrentUserContext.Provider value={currentUser}>
         <Switch>
           <Route path='/sign-up'>
             <Header>
@@ -236,6 +237,8 @@ function App() {
             component={Main} />
         </Switch>
 
+        <Footer />
+
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -268,7 +271,7 @@ function App() {
           onClose={closeAllPopups}
         />
 
-      </currentUserContext.Provider>
+      </CurrentUserContext.Provider>
     </div>
   );
 }

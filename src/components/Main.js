@@ -1,13 +1,12 @@
 import React from "react";
-import Footer from "./Footer";
-import { currentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 import PageLoader from "./PageLoader";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 
 function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onEditAvatar, onAddPlace, onLogout, userEmail, isLoaded }) {
-  const currentUser = React.useContext(currentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return !isLoaded
     ? <PageLoader />
@@ -54,7 +53,6 @@ function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onE
           </section>
 
         </main>
-        <Footer />
       </>
     )
 }

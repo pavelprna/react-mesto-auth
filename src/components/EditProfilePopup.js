@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { currentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
 export default function EditProfilePopup ({ isOpen, onClose, onUpdateUser }) {
     const [values, setValues] = useState({ name: '', about: '' });
-    const currentUser = useContext(currentUserContext);
+    const currentUser = useContext(CurrentUserContext);
     useEffect(() => {
       setValues({
         name: (currentUser.name || ''),
