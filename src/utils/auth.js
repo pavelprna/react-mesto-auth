@@ -15,36 +15,38 @@ class Auth {
 
   signUp({ password, email }) {
     return this._request({
-      endpoint: '/signup',
+      endpoint: 'signup',
       req: {
         method: 'POST',
         headers: this.headers,
-        body: JSON.stringify({ password, email })
-      }
+        body: JSON.stringify({ password, email }),
+        credentials: 'include',
+      },
     });
   }
 
   signIn(userData) {
     return this._request({
-      endpoint: '/signin',
+      endpoint: 'signin',
       req: {
         method: 'POST',
         headers: this.headers,
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
+        credentials: 'include',
       }
     })
       .catch(err => console.log(err));
   }
 
-  checkToken(token) {
+  checkToken() {
     return this._request({
-      endpoint: '/users/me',
+      endpoint: 'users/me',
       req: {
         method: "GET",
         headers: {
           ...this.headers,
-          'Authorization': `Bearer ${token}`
         },
+        credentials: 'include',
       }
     })
 
@@ -52,7 +54,7 @@ class Auth {
 }
 
 const auth = new Auth({
-  baseUrl: 'https://auth.nomoreparties.co',
+  baseUrl: 'https://api.mesto.prna.nomoredomains.club/',
   headers: {
     'Content-Type': 'application/json',
   }

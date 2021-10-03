@@ -35,22 +35,21 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      auth.checkToken(token)
-        .then(res => {
-          handleLogin(res.data.email);
-        })
-        .catch(err => console.log(err));
-    }
-    Promise.all([api.getUser(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setCurrentUser(user);
-        setCards(cards);
+    auth.checkToken()
+      .then(res => {
+        handleLogin(res.user.email);
+        Promise.all([api.getUser(), api.getInitialCards()])
+          .then(([user, cards]) => {
+            setCurrentUser(user.user);
+            setCards(cards);
+          })
+          .catch(err => console.log(err))
+          .finally(() => setIsLoaded(true));
       })
-      .catch(err => console.log(err))
-      .finally(() => setIsLoaded(true));
-      // eslint-disable-next-line
+      .catch(err => console.log(err));
+
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -105,7 +104,7 @@ function App() {
   }
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -180,11 +179,9 @@ function App() {
 
   const handleSignIn = (userData) => {
     auth.signIn(userData)
-      .then(json => {
-        if (json?.token) {
-          localStorage.setItem('jwt', json.token);
-          history.push('/');
-        }
+      .then(() => {
+        setLoggedIn(true);
+        history.push('/');
       })
       .then(() => {
         setUserEmail(userData.email);

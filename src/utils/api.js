@@ -9,6 +9,7 @@ class Api {
       method: param.method,
       headers: this._headers,
       body: param.body,
+      credentials: 'include',
     })
       .then(res => {
         if (res.ok) {
@@ -58,14 +59,14 @@ class Api {
   likeCard(cardId) {
     return this._request({
       method: 'PUT',
-      path: `cards/likes/${cardId}`,
+      path: `cards/${cardId}/likes`,
     });
   }
 
   unlikeCard(cardId) {
     return this._request({
       method: 'DELETE',
-      path: `cards/likes/${cardId}`,
+      path: `cards/${cardId}/likes`,
     });
   }
 
@@ -83,9 +84,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-25/',
+  baseUrl: 'https://api.mesto.prna.nomoredomains.club/',
   headers: {
-    authorization: '04f57d96-9414-4d3f-8e70-9d8b878ddf47',
     'Content-Type': 'application/json'
   }
 });
