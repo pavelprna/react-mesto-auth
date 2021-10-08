@@ -49,7 +49,6 @@ class Auth {
         credentials: 'include',
       }
     })
-
   }
 }
 

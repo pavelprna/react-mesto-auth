@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, withRouter, Link, useHistory } from 'react-router-dom';
-import { delete_cookie } from 'sfcookies';
 import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
@@ -131,7 +130,7 @@ function App() {
   const handleUpdateUser = (data) => {
     api.updateUser(data)
       .then(user => {
-        setCurrentUser(user);
+        setCurrentUser(user.user);
         closeAllPopups();
       })
       .catch(err => console.log(err));
@@ -140,7 +139,7 @@ function App() {
   const handleUpdateAvatar = (data) => {
     api.changeAvatar(data)
       .then(user => {
-        setCurrentUser(user);
+        setCurrentUser(user.user);
         closeAllPopups();
       })
       .catch(err => console.log(err));
@@ -181,11 +180,11 @@ function App() {
   const handleSignIn = (userData) => {
     auth.signIn(userData)
       .then(() => {
-        setLoggedIn(true);
+        setUserEmail(userData.email);
         history.push('/');
+        setLoggedIn(true);
       })
       .then(() => {
-        setUserEmail(userData.email);
         setLoggedIn(true);
       })
       .catch(error => console.log(error));
@@ -198,8 +197,13 @@ function App() {
   }
 
   const handleLogout = () => {
-    delete_cookie('jwt');
-    setUserEmail('');
+    auth.logout()
+      .then(() => {
+        history.push('sign-in')
+        setUserEmail('');
+        setLoggedIn(false);
+      })
+      .catch(error => console.log(error));
   }
 
   return (
