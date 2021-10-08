@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, withRouter, Link, useHistory } from 'react-router-dom';
+import { delete_cookie } from 'sfcookies';
 import ProtectedRoute from "./ProtectedRoute";
 import Header from "./Header";
 import Main from "./Main";
@@ -197,7 +198,7 @@ function App() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('jwt');
+    delete_cookie('jwt');
     setUserEmail('');
   }
 
