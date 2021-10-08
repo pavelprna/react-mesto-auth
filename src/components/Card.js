@@ -3,8 +3,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card(props) {
   const card = props.card;
-  console.log(card)
-
   const currentUser = React.useContext(CurrentUserContext);
 
   const isOwn = card.owner === currentUser._id;
