@@ -14,7 +14,7 @@ function Main({ cards, onCardLike, onCardDelete, onCardClick, onEditProfile, onE
       <>
         <Header>
           <p className="header__email">{userEmail}</p>
-          <Link to="/sign-in" onClick={onLogout} className='header__link link'>Выйти</Link>
+          <Link to="/logout" onClick={onLogout} className='header__link link'>Выйти</Link>
         </Header>
         <main className="content">
 

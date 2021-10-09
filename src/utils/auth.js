@@ -38,6 +38,16 @@ class Auth {
       .catch(err => console.log(err));
   }
 
+  logout() {
+    return this._request({
+      endpoint: 'logout',
+      req: {
+        method: 'DELETE',
+        credentials: 'include',
+      }
+    })
+  }
+
   checkToken() {
     return this._request({
       endpoint: 'users/me',
