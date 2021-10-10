@@ -167,9 +167,10 @@ function App() {
             message: "Вы успешно зарегистрировались!",
           });
           setIsTooltipOpen(true);
-          history.push("/");
+          setIsLogined(true)
         }
       })
+      .then(() => history.push('/'))
       .catch((error) => {
         setTooltipData({
           icon: tooltipIconError,
